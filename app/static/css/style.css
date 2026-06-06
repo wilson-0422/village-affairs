@@ -1,0 +1,66 @@
+body {
+    background-color: #f8f9fa;
+}
+
+.sidebar {
+    min-height: calc(100vh - 56px);
+    border-right: 1px solid #dee2e6;
+}
+
+.sidebar .nav-link {
+    color: #333;
+    padding: 0.75rem 1rem;
+    border-radius: 4px;
+    margin-bottom: 2px;
+}
+
+.sidebar .nav-link:hover {
+    background-color: #e9ecef;
+    color: #198754;
+}
+
+.sidebar .nav-link.active {
+    background-color: #198754;
+    color: #fff;
+}
+
+.jumbotron {
+    background: linear-gradient(135deg, #198754 0%, #20c997 100%);
+}
+
+.card {
+    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+    border: none;
+}
+
+.card-header {
+    font-weight: 600;
+}
+
+.table th {
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.footer {
+    margin-top: 2rem;
+}
+
+.badge {
+    font-weight: 500;
+}
+
+.btn-success {
+    background-color: #198754;
+    border-color: #198754;
+}
+
+.btn-success:hover {
+    background-color: #157347;
+    border-color: #146c43;
+}
+
+.navbar-dark .navbar-brand {
+    font-weight: 700;
+    font-size: 1.2rem;
+}

@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+
+{% block title %}{{ notice.title }} - 村务公示 - 乡村村务数字化系统{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h3>📢 公示详情</h3>
+    <div>
+        {% if notice.status == '草稿' %}
+        <form method="POST" action="{{ url_for('notices.publish', notice_id=notice.id) }}" class="d-inline">
+            <button type="submit" class="btn btn-success">发布公示</button>
+        </form>
+        {% endif %}
+        <a href="{{ url_for('notices.list_notices') }}" class="btn btn-secondary">返回列表</a>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-body">
+        <h4 class="card-title mb-3">{{ notice.title }}</h4>
+        <div class="row mb-3">
+            <div class="col-md-3">
+                <span class="text-muted">类别：</span>{{ notice.category }}
+            </div>
+            <div class="col-md-3">
+                <span class="text-muted">发布人：</span>{{ notice.publisher or '-' }}
+            </div>
+            <div class="col-md-3">
+                <span class="text-muted">发布日期：</span>{{ notice.publish_date or '-' }}
+            </div>
+            <div class="col-md-3">
+                <span class="text-muted">状态：</span>
+                {% if notice.status == '已发布' %}
+                <span class="badge bg-success">{{ notice.status }}</span>
+                {% elif notice.status == '草稿' %}
+                <span class="badge bg-warning text-dark">{{ notice.status }}</span>
+                {% else %}
+                <span class="badge bg-secondary">{{ notice.status }}</span>
+                {% endif %}
+            </div>
+        </div>
+        <hr>
+        <div class="mt-3">
+            {{ notice.content | replace('\n', '<br>') | safe }}
+        </div>
+    </div>
+</div>
+
+<div class="mt-3">
+    <form method="POST" action="{{ url_for('notices.delete', notice_id=notice.id) }}" onsubmit="return confirm('确定要删除该公示吗？')">
+        <button type="submit" class="btn btn-danger">删除公示</button>
+    </form>
+</div>
+{% endblock %}

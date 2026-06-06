@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+
+{% block title %}村集体活动 - 乡村村务数字化系统{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h3>🎉 村集体活动</h3>
+    <a href="{{ url_for('activities.create') }}" class="btn btn-success">新增活动</a>
+</div>
+
+<div class="card">
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <thead class="table-light">
+                    <tr>
+                        <th>活动名称</th>
+                        <th>活动日期</th>
+                        <th>活动地点</th>
+                        <th>组织者</th>
+                        <th>参与人数</th>
+                        <th>状态</th>
+                        <th>操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for activity in activities %}
+                    <tr>
+                        <td><a href="{{ url_for('activities.detail', activity_id=activity.id) }}">{{ activity.title }}</a></td>
+                        <td>{{ activity.activity_date }}</td>
+                        <td>{{ activity.location or '-' }}</td>
+                        <td>{{ activity.organizer or '-' }}</td>
+                        <td>{{ activity.participants_count }}</td>
+                        <td>
+                            {% if activity.status == '筹备中' %}
+                            <span class="badge bg-info text-dark">{{ activity.status }}</span>
+                            {% elif activity.status == '进行中' %}
+                            <span class="badge bg-success">{{ activity.status }}</span>
+                            {% else %}
+                            <span class="badge bg-secondary">{{ activity.status }}</span>
+                            {% endif %}
+                        </td>
+                        <td>
+                            <a href="{{ url_for('activities.detail', activity_id=activity.id) }}" class="btn btn-sm btn-info">查看</a>
+                        </td>
+                    </tr>
+                    {% else %}
+                    <tr>
+                        <td colspan="7" class="text-center text-muted">暂无活动记录</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

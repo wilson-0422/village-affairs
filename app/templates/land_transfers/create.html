@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+
+{% block title %}新增土地流转 - 乡村村务数字化系统{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h3>🌾 新增土地流转</h3>
+    <a href="{{ url_for('land_transfers.list_transfers') }}" class="btn btn-secondary">返回列表</a>
+</div>
+
+<div class="card">
+    <div class="card-body">
+        <form method="POST">
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label for="land_location" class="form-label">土地位置 <span class="text-danger">*</span></label>
+                    <input type="text" class="form-control" id="land_location" name="land_location" required>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label for="area" class="form-label">面积（亩） <span class="text-danger">*</span></label>
+                    <input type="number" class="form-control" id="area" name="area" step="0.01" required>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label for="transfer_type" class="form-label">流转类型 <span class="text-danger">*</span></label>
+                    <select class="form-select" id="transfer_type" name="transfer_type" required>
+                        <option value="出租">出租</option>
+                        <option value="转让">转让</option>
+                        <option value="入股">入股</option>
+                    </select>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label for="price" class="form-label">流转价格（元） <span class="text-danger">*</span></label>
+                    <input type="number" class="form-control" id="price" name="price" step="0.01" required>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label for="from_party" class="form-label">流出方 <span class="text-danger">*</span></label>
+                    <input type="text" class="form-control" id="from_party" name="from_party" required>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label for="to_party" class="form-label">流入方 <span class="text-danger">*</span></label>
+                    <input type="text" class="form-control" id="to_party" name="to_party" required>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label for="start_date" class="form-label">开始日期 <span class="text-danger">*</span></label>
+                    <input type="date" class="form-control" id="start_date" name="start_date" required>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label for="end_date" class="form-label">结束日期 <span class="text-danger">*</span></label>
+                    <input type="date" class="form-control" id="end_date" name="end_date" required>
+                </div>
+            </div>
+            <div class="mb-3">
+                <label for="status" class="form-label">状态</label>
+                <select class="form-select" id="status" name="status">
+                    <option value="待审批">待审批</option>
+                    <option value="已生效">已生效</option>
+                    <option value="已到期">已到期</option>
+                    <option value="已取消">已取消</option>
+                </select>
+            </div>
+            <div class="mb-3">
+                <label for="description" class="form-label">备注说明</label>
+                <textarea class="form-control" id="description" name="description" rows="3"></textarea>
+            </div>
+            <button type="submit" class="btn btn-success">提交</button>
+            <a href="{{ url_for('land_transfers.list_transfers') }}" class="btn btn-secondary">取消</a>
+        </form>
+    </div>
+</div>
+{% endblock %}

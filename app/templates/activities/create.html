@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+
+{% block title %}新增活动 - 乡村村务数字化系统{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h3>🎉 新增活动</h3>
+    <a href="{{ url_for('activities.list_activities') }}" class="btn btn-secondary">返回列表</a>
+</div>
+
+<div class="card">
+    <div class="card-body">
+        <form method="POST">
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label for="title" class="form-label">活动名称 <span class="text-danger">*</span></label>
+                    <input type="text" class="form-control" id="title" name="title" required>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label for="activity_date" class="form-label">活动日期 <span class="text-danger">*</span></label>
+                    <input type="date" class="form-control" id="activity_date" name="activity_date" required>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label for="location" class="form-label">活动地点</label>
+                    <input type="text" class="form-control" id="location" name="location">
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label for="organizer" class="form-label">组织者</label>
+                    <input type="text" class="form-control" id="organizer" name="organizer">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label for="participants_count" class="form-label">预计参与人数</label>
+                    <input type="number" class="form-control" id="participants_count" name="participants_count" value="0" min="0">
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label for="status" class="form-label">状态</label>
+                    <select class="form-select" id="status" name="status">
+                        <option value="筹备中">筹备中</option>
+                        <option value="进行中">进行中</option>
+                        <option value="已结束">已结束</option>
+                    </select>
+                </div>
+            </div>
+            <div class="mb-3">
+                <label for="content" class="form-label">活动内容</label>
+                <textarea class="form-control" id="content" name="content" rows="5"></textarea>
+            </div>
+            <button type="submit" class="btn btn-success">提交</button>
+            <a href="{{ url_for('activities.list_activities') }}" class="btn btn-secondary">取消</a>
+        </form>
+    </div>
+</div>
+{% endblock %}

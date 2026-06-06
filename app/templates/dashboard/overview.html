@@ -1,0 +1,210 @@
+{% extends "base.html" %}
+
+{% block title %}数据仪表盘 - 乡村村务数字化系统{% endblock %}
+
+{% block content %}
+<h3 class="mb-4">📊 数据仪表盘</h3>
+
+<div class="row mb-4">
+    <div class="col-md-2">
+        <div class="card text-white bg-success">
+            <div class="card-body text-center">
+                <h5>集体资产</h5>
+                <h2>{{ asset_count }}</h2>
+                <small>总值 {{ "%.0f"|format(asset_total_value) }} 元</small>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-2">
+        <div class="card text-white bg-primary">
+            <div class="card-body text-center">
+                <h5>土地流转</h5>
+                <h2>{{ transfer_count }}</h2>
+                <small>条记录</small>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-2">
+        <div class="card text-white bg-warning">
+            <div class="card-body text-center">
+                <h5>惠民补贴</h5>
+                <h2>{{ subsidy_count }}</h2>
+                <small>个项目</small>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-2">
+        <div class="card text-white bg-info">
+            <div class="card-body text-center">
+                <h5>集体活动</h5>
+                <h2>{{ activity_count }}</h2>
+                <small>项活动</small>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-2">
+        <div class="card text-white bg-secondary">
+            <div class="card-body text-center">
+                <h5>村务公示</h5>
+                <h2>{{ notice_count }}</h2>
+                <small>条公示</small>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-6 mb-4">
+        <div class="card">
+            <div class="card-header">资产分类统计</div>
+            <div class="card-body">
+                <table class="table table-sm">
+                    <thead>
+                        <tr>
+                            <th>类别</th>
+                            <th>数量</th>
+                            <th>总值（元）</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for cat, count, total in category_stats %}
+                        <tr>
+                            <td>{{ cat }}</td>
+                            <td>{{ count }}</td>
+                            <td>{{ "%.2f"|format(total or 0) }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6 mb-4">
+        <div class="card">
+            <div class="card-header">资产状态统计</div>
+            <div class="card-body">
+                <table class="table table-sm">
+                    <thead>
+                        <tr>
+                            <th>状态</th>
+                            <th>数量</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for status, count in status_stats %}
+                        <tr>
+                            <td>{{ status }}</td>
+                            <td>{{ count }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-6 mb-4">
+        <div class="card">
+            <div class="card-header">土地流转类型统计</div>
+            <div class="card-body">
+                <table class="table table-sm">
+                    <thead>
+                        <tr>
+                            <th>流转类型</th>
+                            <th>数量</th>
+                            <th>总面积（亩）</th>
+                            <th>总价格（元）</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for ttype, count, area, price in transfer_type_stats %}
+                        <tr>
+                            <td>{{ ttype }}</td>
+                            <td>{{ count }}</td>
+                            <td>{{ "%.2f"|format(area or 0) }}</td>
+                            <td>{{ "%.2f"|format(price or 0) }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6 mb-4">
+        <div class="card">
+            <div class="card-header">补贴类别统计</div>
+            <div class="card-body">
+                <table class="table table-sm">
+                    <thead>
+                        <tr>
+                            <th>类别</th>
+                            <th>项目数</th>
+                            <th>预算总额（元）</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for cat, count, budget in subsidy_category_stats %}
+                        <tr>
+                            <td>{{ cat }}</td>
+                            <td>{{ count }}</td>
+                            <td>{{ "%.2f"|format(budget or 0) }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-6 mb-4">
+        <div class="card">
+            <div class="card-header">活动状态统计</div>
+            <div class="card-body">
+                <table class="table table-sm">
+                    <thead>
+                        <tr>
+                            <th>状态</th>
+                            <th>数量</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for status, count in activity_status_stats %}
+                        <tr>
+                            <td>{{ status }}</td>
+                            <td>{{ count }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6 mb-4">
+        <div class="card">
+            <div class="card-header">公示类别统计</div>
+            <div class="card-body">
+                <table class="table table-sm">
+                    <thead>
+                        <tr>
+                            <th>类别</th>
+                            <th>数量</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for cat, count in notice_category_stats %}
+                        <tr>
+                            <td>{{ cat }}</td>
+                            <td>{{ count }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

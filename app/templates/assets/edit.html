@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+
+{% block title %}编辑资产 - 乡村村务数字化系统{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h3>🏛️ 编辑资产</h3>
+    <a href="{{ url_for('assets.detail', asset_id=asset.id) }}" class="btn btn-secondary">返回详情</a>
+</div>
+
+<div class="card">
+    <div class="card-body">
+        <form method="POST">
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label for="name" class="form-label">资产名称 <span class="text-danger">*</span></label>
+                    <input type="text" class="form-control" id="name" name="name" value="{{ asset.name }}" required>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label for="category" class="form-label">资产类别 <span class="text-danger">*</span></label>
+                    <select class="form-select" id="category" name="category" required>
+                        <option value="房屋" {% if asset.category == '房屋' %}selected{% endif %}>房屋</option>
+                        <option value="土地" {% if asset.category == '土地' %}selected{% endif %}>土地</option>
+                        <option value="设备" {% if asset.category == '设备' %}selected{% endif %}>设备</option>
+                        <option value="其他" {% if asset.category == '其他' %}selected{% endif %}>其他</option>
+                    </select>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label for="value" class="form-label">资产价值（元） <span class="text-danger">*</span></label>
+                    <input type="number" class="form-control" id="value" name="value" step="0.01" value="{{ asset.value }}" required>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label for="quantity" class="form-label">数量</label>
+                    <input type="number" class="form-control" id="quantity" name="quantity" value="{{ asset.quantity }}" min="1">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label for="location" class="form-label">存放位置</label>
+                    <input type="text" class="form-control" id="location" name="location" value="{{ asset.location or '' }}">
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label for="status" class="form-label">状态</label>
+                    <select class="form-select" id="status" name="status">
+                        <option value="在用" {% if asset.status == '在用' %}selected{% endif %}>在用</option>
+                        <option value="闲置" {% if asset.status == '闲置' %}selected{% endif %}>闲置</option>
+                        <option value="报废" {% if asset.status == '报废' %}selected{% endif %}>报废</option>
+                    </select>
+                </div>
+            </div>
+            <div class="mb-3">
+                <label for="description" class="form-label">资产描述</label>
+                <textarea class="form-control" id="description" name="description" rows="3">{{ asset.description or '' }}</textarea>
+            </div>
+            <button type="submit" class="btn btn-success">保存修改</button>
+            <a href="{{ url_for('assets.detail', asset_id=asset.id) }}" class="btn btn-secondary">取消</a>
+        </form>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% block title %}惠民补贴 - 乡村村务数字化系统{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h3>💰 惠民补贴发放</h3>
+    <a href="{{ url_for('subsidies.create') }}" class="btn btn-success">新增补贴</a>
+</div>
+
+<div class="card">
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <thead class="table-light">
+                    <tr>
+                        <th>补贴名称</th>
+                        <th>类别</th>
+                        <th>补贴标准（元/人）</th>
+                        <th>预算总额（元）</th>
+                        <th>创建时间</th>
+                        <th>操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for subsidy in subsidies %}
+                    <tr>
+                        <td><a href="{{ url_for('subsidies.detail', subsidy_id=subsidy.id) }}">{{ subsidy.name }}</a></td>
+                        <td>{{ subsidy.category }}</td>
+                        <td>{{ "%.2f"|format(subsidy.amount) }}</td>
+                        <td>{{ "%.2f"|format(subsidy.total_budget) }}</td>
+                        <td>{{ subsidy.created_at.strftime('%Y-%m-%d') if subsidy.created_at else '-' }}</td>
+                        <td>
+                            <a href="{{ url_for('subsidies.detail', subsidy_id=subsidy.id) }}" class="btn btn-sm btn-info">查看</a>
+                            <a href="{{ url_for('subsidies.distribute', subsidy_id=subsidy.id) }}" class="btn btn-sm btn-warning">发放</a>
+                        </td>
+                    </tr>
+                    {% else %}
+                    <tr>
+                        <td colspan="6" class="text-center text-muted">暂无补贴项目</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}
